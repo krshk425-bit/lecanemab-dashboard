@@ -10,8 +10,7 @@ tab1, tab2, tab3 = st.tabs(["Clinical Activities", "Commercial Activities", "Glo
 with tab1:
     st.title("Clinical Activities - Lecanemab Trials")
 
-    # Clean RSS feed URL
-    url = "https://clinicaltrials.gov/api/rss?term=(Alzheimer+AND+Lecanemab)&dateField=StudyFirstPostDate"
+    url = "https://clinicaltrials.gov/api/query/rss?cond=Alzheimer&term=Lecanemab"
     feed = feedparser.parse(url)
 
     if not feed.entries:
