@@ -1,7 +1,7 @@
 import streamlit as st
 import feedparser
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
 
 # --- Tabs ---
 tab1, tab2, tab3 = st.tabs(["Clinical Activities", "Commercial Activities", "Global Availability Map"])
@@ -10,14 +10,14 @@ tab1, tab2, tab3 = st.tabs(["Clinical Activities", "Commercial Activities", "Glo
 with tab1:
     st.title("Clinical Activities - Lecanemab Trials")
 
-    # RSS feed for Alzheimer + Lecanemab trials
-    url = "https://clinicaltrials.gov/api/rss?term=(Alzheimer Syndrome OR Alzheimer-Type Dementia OR ATD OR Lecanemab OR Liqambi)&dateField=StudyFirstPostDate"
+    # Clean RSS feed URL
+    url = "https://clinicaltrials.gov/api/rss?term=(Alzheimer+AND+Lecanemab)&dateField=StudyFirstPostDate"
     feed = feedparser.parse(url)
 
     if not feed.entries:
         st.error("No trial data found. Please check the RSS feed or your internet connection.")
     else:
-        for entry in feed.entries[:15]:  # show first 15 trials
+        for entry in feed.entries[:15]:
             st.subheader(entry.title)
             st.write("Published: " + entry.published)
             st.markdown("View Trial: " + entry.link)
@@ -38,14 +38,12 @@ with tab2:
 with tab3:
     st.title("Global Availability of Lecanemab")
 
-    # Example data (update with real-world info)
     data = {
         "Country": ["United States", "Japan", "China", "Germany", "United Kingdom"],
         "Status": ["Approved", "Approved", "In Trials", "Pending Review", "Pending Review"]
     }
     df = pd.DataFrame(data)
 
-    # Create a choropleth map
     fig = px.choropleth(
         df,
         locations="Country",
@@ -60,7 +58,5 @@ with tab3:
     )
 
     st.plotly_chart(fig, use_container_width=True)
-
-    # Show table below map
     st.subheader("Country Status Table")
     st.dataframe(df)
