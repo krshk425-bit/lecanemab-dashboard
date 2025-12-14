@@ -10,7 +10,7 @@ tab1, tab2, tab3 = st.tabs(["Clinical Activities", "Commercial Activities", "Glo
 with tab1:
     st.title("Clinical Activities - Lecanemab Trials")
 
-    url = "https://clinicaltrials.gov/api/query/rss?cond=Alzheimer&term=Lecanemab"
+    url = "https://clinicaltrials.gov/api/rss?term=Lecanemab&dateField=StudyFirstPostDate"
     feed = feedparser.parse(url)
 
     if not feed.entries:
@@ -59,3 +59,4 @@ with tab3:
     st.plotly_chart(fig, use_container_width=True)
     st.subheader("Country Status Table")
     st.dataframe(df)
+
